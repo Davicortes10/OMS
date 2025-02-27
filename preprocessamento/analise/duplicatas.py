@@ -78,10 +78,49 @@ class Duplicatas:
             Category    12
             dtype: int64
         """
-        
+
         valores_unicos = self.df.select_dtypes(exclude=['float', 'int']).nunique()
         print("\n📊 Contagem de valores únicos por coluna categórica:")
         print(valores_unicos)
         return valores_unicos
+    
+    def executar_analise_duplicatas(self) -> None:
+        """
+        Executa um pipeline de análise para identificar registros duplicados e contar valores únicos.
+
+        Este método encapsula a execução sequencial das seguintes operações:
+        
+        1. Verifica a quantidade de registros duplicados considerando as colunas 'Country' e 'Year'.
+        2. Conta a quantidade de valores únicos nas colunas categóricas (excluindo colunas numéricas).
+        
+        Este método facilita a análise de duplicatas e distribuição de valores categóricos sem a 
+        necessidade de chamar cada método individualmente.
+
+        Returns:
+            None: O método apenas imprime os resultados no console.
+
+        Raises:
+            AttributeError: Se o DataFrame (`self.df`) não estiver carregado corretamente.
+            ValueError: Se as colunas `['Country', 'Year']` não existirem no DataFrame.
+
+        Example:
+            >>> bot = Duplicatas(df)
+            >>> bot.executar_analise_duplicatas()
+            
+            🔍 Total de registros duplicados considerando ['Country', 'Year']: 10
+
+            📊 Contagem de valores únicos por coluna categórica:
+            Country     50
+            Continent    6
+            Category    12
+            dtype: int64
+        """
+        # Verifica se o DataFrame foi carregado corretamente antes de executar os métodos
+        if not hasattr(self, 'df') or self.df is None:
+            raise AttributeError("❌ O DataFrame não foi carregado. Certifique-se de que o arquivo CSV foi lido corretamente.")
+
+        self.verificar_duplicatas(['Country', 'Year'])
+        self.contar_valores_unicos()
+
 
     

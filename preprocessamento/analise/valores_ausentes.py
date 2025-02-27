@@ -18,3 +18,8 @@ class AnaliseValoresAusentes:
         print("\n📉 Contagem de valores ausentes por coluna:")
         print(valores_ausentes)
         return valores_ausentes
+    
+    def paises_com_valores_ausentes(self) -> list:
+        paises_faltantes = self.df[self.df.isnull().any(axis=1)]['Country'].unique().tolist()
+        print("\n🌍 Países com valores ausentes:", paises_faltantes)
+        return paises_faltantes

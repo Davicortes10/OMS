@@ -36,3 +36,19 @@ class ConsumoAlcool:
 
         # Exibe o gráfico interativo
         fig.show()
+
+    def executar_visualizacao_consumo_alcool(self) -> None:
+        """
+        Executa a visualização interativa da distribuição do consumo de álcool por status socioeconômico.
+
+        Este método encapsula a chamada do método `visualizar_distribuicao_alcool()`, garantindo 
+        uma interface mais intuitiva para exibição do histograma empilhado.
+
+        Returns:
+            None: Apenas exibe o gráfico interativo na interface do Plotly.
+
+        Example:
+            >>> visualizer = ConsumoAlcool(df)
+            >>> visualizer.executar_visualizacao_consumo_alcool()
+        """
+        self.visualizar_distribuicao_alcool()

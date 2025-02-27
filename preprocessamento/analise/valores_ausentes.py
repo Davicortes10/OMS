@@ -23,3 +23,9 @@ class AnaliseValoresAusentes:
         paises_faltantes = self.df[self.df.isnull().any(axis=1)]['Country'].unique().tolist()
         print("\n🌍 Países com valores ausentes:", paises_faltantes)
         return paises_faltantes
+    
+    def valores_ausentes_por_pais(self) -> pd.Series:
+        valores_por_pais = self.df.isnull().groupby(self.df['Country']).sum().sum(axis=1).sort_values(ascending=False)
+        print("\n📊 Valores ausentes por país (ordenados):")
+        print(valores_por_pais)
+        return valores_por_pais

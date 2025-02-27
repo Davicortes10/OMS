@@ -2,6 +2,21 @@ import pandas as pd
 import plotly.express as px
 
 class ConsumoAlcool:
+    """
+    Classe para visualização da distribuição do consumo de álcool por status socioeconômico.
+
+    Esta classe gera um histograma empilhado interativo usando Plotly, permitindo analisar 
+    como o consumo de álcool varia entre diferentes grupos de países.
+
+    Funcionalidades:
+    - Criar um histograma empilhado para visualizar a distribuição do consumo de álcool.
+    - Diferenciar os países por status socioeconômico (exemplo: Desenvolvido vs. Em Desenvolvimento).
+    - Permitir uma análise detalhada da distribuição de consumo de álcool na população.
+
+    Attributes:
+        df (pd.DataFrame): O DataFrame contendo os dados a serem analisados.
+    """
+
     def __init__(self, df: pd.DataFrame):
         """
         Inicializa a classe com um DataFrame.
@@ -20,6 +35,20 @@ class ConsumoAlcool:
         self.df = df.copy()  # Mantém os dados originais intactos
 
     def visualizar_distribuicao_alcool(self, nbins: int = 30) -> None:
+        """
+        Gera um histograma empilhado mostrando a distribuição do consumo de álcool por status socioeconômico.
+
+        Args:
+            nbins (int, opcional): Número de bins (faixas) no histograma. O padrão é 30.
+
+        Returns:
+            None: Apenas exibe o gráfico interativo.
+
+        Example:
+            >>> visualizer = ConsumoAlcool(df)
+            >>> visualizer.visualizar_distribuicao_alcool(nbins=40)
+        """
+        
         # Criação do histograma empilhado
         fig = px.histogram(self.df, 
                            x='Alcohol', 

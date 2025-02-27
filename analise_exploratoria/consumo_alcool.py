@@ -18,3 +18,21 @@ class ConsumoAlcool:
             raise KeyError(f"❌ O DataFrame deve conter as colunas {required_columns} para a visualização.")
 
         self.df = df.copy()  # Mantém os dados originais intactos
+
+    def visualizar_distribuicao_alcool(self, nbins: int = 30) -> None:
+        # Criação do histograma empilhado
+        fig = px.histogram(self.df, 
+                           x='Alcohol', 
+                           color='Status', 
+                           barmode='stack', 
+                           nbins=nbins)
+
+        # Personalização do layout
+        fig.update_layout(
+            xaxis_title='Alcohol', 
+            yaxis_title='Count', 
+            title='Stacked Histogram of Alcohol by Status'
+        )
+
+        # Exibe o gráfico interativo
+        fig.show()

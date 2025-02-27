@@ -57,7 +57,7 @@ class TendenciaVariasVariaveis:
             >>> visualizer = TendenciaVariasVariaveis(df)
             >>> visualizer.visualizar_tendencias()
         """
-        
+
         # Verifica se todas as colunas necessárias existem no DataFrame
         missing_cols = [col for col in self.cols_to_inspect if col not in self.df.columns]
         if missing_cols:
@@ -90,3 +90,5 @@ class TendenciaVariasVariaveis:
             >>> visualizer.executar_visualizacao_varias_variaveis()
         """
         self.visualizar_tendencias()
+
+        

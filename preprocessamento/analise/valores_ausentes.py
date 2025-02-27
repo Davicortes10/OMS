@@ -80,8 +80,50 @@ class AnaliseValoresAusentes:
             France     4
             dtype: int64
         """
-        
+
         valores_por_pais = self.df.isnull().groupby(self.df['Country']).sum().sum(axis=1).sort_values(ascending=False)
         print("\n📊 Valores ausentes por país (ordenados):")
         print(valores_por_pais)
         return valores_por_pais
+    
+    def executar_analise_valores_ausentes(self) -> None:
+        """
+        Executa um pipeline de análise para identificar valores ausentes no dataset.
+
+        Este método encapsula a execução sequencial das seguintes operações:
+        
+        1. Contagem de valores ausentes em cada coluna (`contar_valores_ausentes()`).
+        2. Identificação dos países que possuem pelo menos um valor ausente (`paises_com_valores_ausentes()`).
+        3. Contagem total de valores ausentes por país e ordenação em ordem decrescente (`valores_ausentes_por_pais()`).
+        
+        Esse pipeline permite uma visão completa sobre a distribuição de valores ausentes no dataset.
+
+        Returns:
+            None: O método apenas imprime os resultados no console.
+
+        Raises:
+            AttributeError: Se o DataFrame (`self.df`) não estiver carregado corretamente.
+
+        Example:
+            >>> bot = AnaliseValoresAusentes(df)
+            >>> bot.executar_analise_valores_ausentes()
+            
+            📉 Contagem de valores ausentes por coluna:
+            Population    12
+            GDP           8
+
+            🌍 Países com valores ausentes: ['Brazil', 'India', 'USA']
+
+            📊 Valores ausentes por país (ordenados):
+            India     10
+            Brazil     8
+            USA        6
+            France     4
+        """
+        # Verifica se o DataFrame foi carregado corretamente antes de executar os métodos
+        if not hasattr(self, 'df') or self.df is None:
+            raise AttributeError("❌ O DataFrame não foi carregado. Certifique-se de que o arquivo CSV foi lido corretamente.")
+
+        self.contar_valores_ausentes()
+        self.paises_com_valores_ausentes()
+        self.valores_ausentes_por_pais()

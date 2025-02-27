@@ -32,3 +32,7 @@ class DataFrameFinal:
         print("\n📉 Contagem de valores ausentes por país:")
         print(valores_faltantes)
         return valores_faltantes
+    
+    def exibir_dataframe_final(self) -> pd.DataFrame:
+        print("\n✅ DataFrame final sem valores ausentes:")
+        return self.df

@@ -1,3 +1,7 @@
+import pandas as pd
+import plotly.express as px
+
+
 class TendenciaVariasVariaveis:
     def __init__(self, df: pd.DataFrame):
         """
@@ -20,3 +24,22 @@ class TendenciaVariasVariaveis:
             'Life expectancy ', 'Schooling', 'Income composition of resources', 
             'GDP', 'Population'
         ]
+    
+    def visualizar_tendencias(self) -> None:
+        
+        # Verifica se todas as colunas necessárias existem no DataFrame
+        missing_cols = [col for col in self.cols_to_inspect if col not in self.df.columns]
+        if missing_cols:
+            raise KeyError(f"❌ As seguintes colunas estão ausentes no DataFrame: {missing_cols}")
+
+        # Geração dos gráficos
+        for col in self.cols_to_inspect:
+            df_ordenado = self.df.sort_values(by='Year')
+
+            fig = px.line(df_ordenado, 
+                          x='Year', 
+                          y=col, 
+                          color='Country', 
+                          title=f'Trend of {col} Over the Years')
+
+            fig.show()

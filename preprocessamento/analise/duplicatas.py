@@ -13,5 +13,14 @@ class Duplicatas:
             raise TypeError("❌ O argumento fornecido deve ser um DataFrame do Pandas.")
         
         self.df = df
+    
+    def verificar_duplicatas(self, subset: list) -> int:
+        
+        if not isinstance(subset, list) or not all(col in self.df.columns for col in subset):
+            raise ValueError("❌ O argumento 'subset' deve ser uma lista contendo colunas válidas do DataFrame.")
+
+        duplicatas = self.df.duplicated(subset=subset).sum()
+        print(f"🔍 Total de registros duplicados considerando {subset}: {duplicatas}")
+        return duplicatas
 
     

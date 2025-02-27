@@ -20,3 +20,15 @@ class KNNMissingValueImputer:
         self.df = df.copy()  # Mantém os dados originais intactos
         self.n_neighbors = n_neighbors
         self.imputer = KNNImputer(n_neighbors=self.n_neighbors)
+    
+    def imputar_valores(self) -> pd.DataFrame:
+        # Seleciona apenas colunas numéricas
+        colunas_numericas = self.df.select_dtypes(exclude='object').columns
+        if colunas_numericas.empty:
+            raise ValueError("❌ O DataFrame não possui colunas numéricas para imputação.")
+
+        df_imputado = self.df.copy()
+        df_imputado.loc[:, colunas_numericas] = self.imputer.fit_transform(self.df[colunas_numericas])
+
+        print(f"✅ Imputação KNN aplicada com sucesso utilizando {self.n_neighbors} vizinhos.")
+        return df_imputado

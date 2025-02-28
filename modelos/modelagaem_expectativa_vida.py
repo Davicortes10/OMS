@@ -52,3 +52,6 @@ class LifeExpectancyNN:
     
     def compile_model(self, optimizer='adam', loss='Huber', metrics=['mae']):
         self.model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
+
+    def train_model(self, epochs=1000, batch_size=32, validation_split=0.2):
+        self.model.fit(self.X_train, self.y_train, epochs=epochs, batch_size=batch_size, validation_split=validation_split)

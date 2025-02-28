@@ -69,25 +69,6 @@ class ModelEvaluator:
         plt.legend(["Valores Reais", "Valores Preditos"])
         plt.grid()
         plt.show()
-
-    def visualizar_historico_perda(self) -> None:
-        """
-        Plota o histórico da função de perda do modelo durante o treinamento.
-
-        Returns:
-            None: Apenas exibe o gráfico.
-
-        Example:
-            >>> evaluator = ModelEvaluator(y_test, predictions, model.history.history)
-            >>> evaluator.visualizar_historico_perda()
-        """
-
-        pd.DataFrame(self.model_history).plot(figsize=(8, 5))
-        plt.title("Histórico de Treinamento - Função de Perda")
-        plt.xlabel("Épocas")
-        plt.ylabel("Perda")
-        plt.grid()
-        plt.show()
     
     def analisar_erros_residuais(self) -> None:    
         """
@@ -135,10 +116,7 @@ class ModelEvaluator:
         print("\n📊 2. Comparando valores reais vs. previstos...")
         self.comparar_valores_reais_preditos()
 
-        print("\n📈 3. Analisando histórico de perda durante o treinamento...")
-        self.visualizar_historico_perda()
-
-        print("\n📉 4. Avaliando a distribuição dos erros residuais...")
+        print("\n📉 3. Avaliando a distribuição dos erros residuais...")
         self.analisar_erros_residuais()
 
         print("\n✅ **Avaliação Finalizada com Sucesso!** 🎯")

@@ -7,7 +7,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from modelos.avaliacao_modelo import ModelEvaluator
-import ace_tools as tools
 
 class LifeExpectancyNN:
     """
@@ -107,12 +106,13 @@ class LifeExpectancyNN:
     
     def evaluate_model(self):
         """
-        Avalia o desempenho do modelo treinado e exibe as métricas de desempenho em formato de tabela.
+        Avalia o desempenho do modelo treinado e exibe métricas de desempenho para regressão.
 
         A avaliação inclui:
-        - Acurácia do modelo.
-        - Relatório de classificação detalhado.
-        - Matriz de confusão.
+        - Erro Absoluto Médio (MAE)
+        - Erro Relativo Médio (MAPE)
+        - R² Score (Coeficiente de Determinação)
+        - Análise visual da distribuição de erros.
 
         Returns:
             None: Apenas exibe os resultados formatados.
@@ -121,32 +121,32 @@ class LifeExpectancyNN:
             >>> model = LifeExpectancyNN(df)
             >>> model.evaluate_model()
         """
-        
+
         # Fazer previsões
         y_pred = self.model.predict(self.X_test).flatten()
 
-        # Calcular métricas
+        # Calcular métricas apropriadas para regressão
         erro_absoluto = np.abs(self.y_test - y_pred)
         erro_relativo = np.abs(erro_absoluto / self.y_test)
+        r2 = r2_score(self.y_test, y_pred)
 
         # Criar DataFrame de métricas
-        metrics_data = {
-            "Métrica": ["Erro Absoluto Médio (MAE)", "Erro Relativo Médio (MAPE)"],
-            "Valor": [np.mean(erro_absoluto), np.mean(erro_relativo) * 100]  # MAPE em porcentagem
-        }
-        df_metrics = pd.DataFrame(metrics_data)
+        df_metrics = pd.DataFrame({
+            "Métrica": ["Erro Absoluto Médio (MAE)", "Erro Relativo Médio (MAPE)", "R² Score"],
+            "Valor": [np.mean(erro_absoluto), np.mean(erro_relativo) * 100, r2]
+        })
 
-        # Matriz de confusão (convertida para DataFrame)
-        y_pred_classes = np.round(y_pred)  # Como é um problema de regressão, arredondamos
-        conf_matrix = confusion_matrix(self.y_test, y_pred_classes)
-        df_conf_matrix = pd.DataFrame(conf_matrix, index=["Expectativa Baixa", "Expectativa Alta"], columns=["Previsto Baixo", "Previsto Alto"])
+        # Exibir métricas no console
+        print("\n📊 **Métricas do Modelo:**")
+        print(df_metrics)
 
-        # Exibir tabelas formatadas
-        tools.display_dataframe_to_user(name="Métricas do Modelo", dataframe=df_metrics)
-        tools.display_dataframe_to_user(name="Matriz de Confusão", dataframe=df_conf_matrix)
-        # Criar instância da classe ModelEvaluator para avaliação detalhada
+        # Criar instância da classe ModelEvaluator para análises visuais
         avaliacao = ModelEvaluator(self.y_test, y_pred, self.model.history.history)
+        
+        print("\n📊 **Gerando análises visuais...**")
         avaliacao.executar_avaliacao_completa()
+
+        print("\n✅ **Avaliação do modelo finalizada!** 🚀")
     
     def executar_pipeline(self, epochs=1000, batch_size=32, validation_split=0.2):
         """

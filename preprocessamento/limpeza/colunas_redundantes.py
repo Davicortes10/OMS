@@ -16,4 +16,14 @@ class RemovendoColunas:
                                'under-five deaths ', 'Diphtheria ', 
                                'Income composition of resources']
     
+    def remover_colunas(self) -> pd.DataFrame:
+        
+        colunas_presentes = [col for col in self.cols_to_remove if col in self.df.columns]
+        if not colunas_presentes:
+            print("⚠️ Nenhuma das colunas a serem removidas está presente no DataFrame.")
+            return self.df
+        
+        df_processado = self.df.drop(colunas_presentes, axis=1)
+        print(f"✅ Removidas as colunas: {colunas_presentes}")
+        return df_processado
     

@@ -17,3 +17,8 @@ class ModelEvaluator:
         self.y_test = np.array(y_test)  # Converte para numpy para evitar erros
         self.predictions = predictions.flatten()
         self.model_history = model_history
+    
+    def calcular_r2_score(self) -> float:
+        r2 = r2_score(self.y_test, self.predictions)
+        print(f"\n📊 R² Score: {r2:.4f}")
+        return r2

@@ -85,7 +85,7 @@ class MatrizRelacao:
             >>> analyzer = MatrizRelacao(df)
             >>> analyzer.visualizar_heatmap_correlacoes()
         """
-        
+
         high_correlations = self.obter_correlacoes_significativas(limiar)
 
         if high_correlations.empty:
@@ -96,3 +96,27 @@ class MatrizRelacao:
         sns.heatmap(high_correlations, annot=True, cmap='coolwarm', fmt=".2f", linewidths=0.5)
         plt.title(f"Heatmap das Correlações Significativas (> |{limiar}|)")
         plt.show()
+    
+    def executar_matriz_relacao(self, limiar: float = 0.5) -> None:
+        """
+        Executa o pipeline completo para análise da matriz de correlação.
+
+        Este método encapsula a execução das seguintes etapas:
+        1. Cálculo da matriz de correlação entre variáveis numéricas.
+        2. Filtragem das correlações mais significativas com base em um limiar.
+        3. Geração e exibição de um heatmap para visualização das relações encontradas.
+
+        Args:
+            limiar (float, opcional): Valor mínimo absoluto para considerar uma correlação significativa.
+                O padrão é 0.5.
+
+        Returns:
+            None: Apenas exibe os resultados das análises.
+
+        Example:
+            >>> analyzer = MatrizRelacao(df)
+            >>> analyzer.executar_matriz_relacao(limiar=0.6)
+        """
+        self.calcular_correlacoes()
+        self.obter_correlacoes_significativas(limiar)
+        self.visualizar_heatmap_correlacoes(limiar)

@@ -80,7 +80,7 @@ pipeline.executar_tudo()
 
 ### Análise Exploratória:
 - Identificação de outliers 
-- Tratamento de valores ausentes ⚠
+- Tratamento de valores ausentes
 - Correlação entre variáveis 
 
 ### Modelagem de Aprendizado de Máquina:

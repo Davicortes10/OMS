@@ -20,3 +20,11 @@ class MatrizRelacao:
         correlation_matrix = self.df.select_dtypes(include=['float', 'int']).corr()
         print("\n📊 Matriz de Correlação Calculada:")
         return correlation_matrix
+    
+    def obter_correlacoes_significativas(self, limiar: float = 0.5) -> pd.DataFrame:
+        correlation_matrix = self.calcular_correlacoes()
+        high_correlations = correlation_matrix[np.abs(correlation_matrix) > limiar]
+        high_correlations = high_correlations[high_correlations < 1.0].dropna(how='all', axis=1).dropna(how='all', axis=0)
+
+        print("\n🔥 Correlações Significativas (>|{:.2f}|):".format(limiar))
+        return high_correlations

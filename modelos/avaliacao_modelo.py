@@ -40,3 +40,13 @@ class ModelEvaluator:
         plt.ylabel("Perda")
         plt.grid()
         plt.show()
+    
+    def analisar_erros_residuais(self) -> None:        
+        df_loss = pd.DataFrame({'loss': self.y_test - self.predictions}).reset_index(drop=True)
+        df_loss.plot(figsize=(8, 5))
+        plt.title("Distribuição dos Erros Residuais")
+        plt.xlabel("Amostras")
+        plt.ylabel("Erro (Diferença Real - Predito)")
+        plt.axhline(y=0, color='r', linestyle='--')
+        plt.grid()
+        plt.show()

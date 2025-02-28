@@ -13,6 +13,7 @@ from preprocessamento.limpeza.limpeza_dataset import KNNMissingValueImputer
 from preprocessamento.outliers.outliers import Outlier
 
 
+
 class Principal:
     def __init__(self):
         leitor_df = LeitorDataset("OMS/dataset/dataset_LE.csv")
@@ -65,6 +66,8 @@ class Principal:
     def rede_neural(self):
         rede = LifeExpectancyNN(self.df)
         rede.executar_pipeline()
+
+        
     
     def executar_tudo(self):
         """

@@ -6,6 +6,7 @@ from tensorflow.keras.models import Sequential
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from modelos.avaliacao_modelo import ModelEvaluator
 import ace_tools as tools
 
 class LifeExpectancyNN:
@@ -120,6 +121,7 @@ class LifeExpectancyNN:
             >>> model = LifeExpectancyNN(df)
             >>> model.evaluate_model()
         """
+        
         # Fazer previsões
         y_pred = self.model.predict(self.X_test).flatten()
 
@@ -142,6 +144,9 @@ class LifeExpectancyNN:
         # Exibir tabelas formatadas
         tools.display_dataframe_to_user(name="Métricas do Modelo", dataframe=df_metrics)
         tools.display_dataframe_to_user(name="Matriz de Confusão", dataframe=df_conf_matrix)
+        # Criar instância da classe ModelEvaluator para avaliação detalhada
+        avaliacao = ModelEvaluator(self.y_test, y_pred, self.model.history.history)
+        avaliacao.executar_avaliacao_completa()
     
     def executar_pipeline(self, epochs=1000, batch_size=32, validation_split=0.2):
         """

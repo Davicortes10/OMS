@@ -30,3 +30,13 @@ class LifeExpectancyNN:
         )
 
         self.model = self.build_model(input_shape=(self.X_train.shape[1],))
+    
+    def preprocess_data(self, df: pd.DataFrame) -> pd.DataFrame:
+        
+        le = LabelEncoder()
+        mm = MinMaxScaler()
+
+        df[self.scale_cols] = mm.fit_transform(df[self.scale_cols])
+        df[self.label_cols] = df[self.label_cols].apply(le.fit_transform)
+
+        return df

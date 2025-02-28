@@ -1,4 +1,7 @@
-class LifeExpectancyScatterPlot:
+import pandas as pd
+import plotly.express as px
+
+class VisualizacaoScaterPlot:
     def __init__(self, df: pd.DataFrame):
         """
         Inicializa a classe com um DataFrame.
@@ -15,3 +18,20 @@ class LifeExpectancyScatterPlot:
             raise KeyError(f"❌ O DataFrame deve conter as colunas {required_columns} para a visualização.")
 
         self.df = df.copy()  # Mantém os dados originais intactos
+    
+    def visualizar_correlacao_bmi_vida(self) -> None:
+        # Criando o gráfico de dispersão
+        fig = px.scatter(self.df, 
+                         x=' BMI ', 
+                         y='Life expectancy ', 
+                         color='Status', 
+                         title='Life Expectancy vs BMI')
+
+        # Personalizando o layout
+        fig.update_layout(
+            xaxis_title='BMI', 
+            yaxis_title='Life Expectancy'
+        )
+
+        # Exibe o gráfico interativo
+        fig.show()

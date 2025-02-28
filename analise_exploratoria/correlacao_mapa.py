@@ -15,3 +15,8 @@ class MatrizRelacao:
             raise TypeError("❌ O argumento fornecido deve ser um DataFrame do Pandas.")
 
         self.df = df.copy()  # Mantém os dados originais intactos
+    
+    def calcular_correlacoes(self) -> pd.DataFrame:
+        correlation_matrix = self.df.select_dtypes(include=['float', 'int']).corr()
+        print("\n📊 Matriz de Correlação Calculada:")
+        return correlation_matrix

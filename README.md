@@ -1,11 +1,11 @@
-# 📊 Expectativa de Vida WHO - Mineração de Dados e Aplicações à Engenharia 🌍
+# Expectativa de Vida WHO - Mineração de Dados e Aplicações à Engenharia
 
 Este projeto realiza análises preditivas e mineração de dados na expectativa de vida global, utilizando dados da Organização Mundial da Saúde (WHO).
 
-## 📈 Objetivo
+## Objetivo
 Explorar e modelar a expectativa de vida com aprendizado de máquina, redes neurais e visualização de dados.
 
-## 🚀 Tecnologias Utilizadas
+## Tecnologias Utilizadas
 O projeto foi desenvolvido utilizando as seguintes tecnologias e bibliotecas:
 
 - **Python 3.12+**
@@ -17,7 +17,7 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias e bibliotecas:
 - **KerasTuner** → Otimização de hiperparâmetros
 - **Plotly** → Gráficos interativos
 
-## 📦 Pré-requisitos
+## Pré-requisitos
 Antes de rodar o projeto, certifique-se de ter instalado:
 
 - **Python 3.12+**
@@ -30,7 +30,7 @@ Para instalar os pacotes necessários:
 pip install -r requirements.txt
 ```
 
-## 🔧 Instalação
+## Instalação
 
 1️⃣ Clone este repositório:
 
@@ -58,7 +58,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-## ▶️ Execução do Código
+## Execução do Código
 
 Após configurar o ambiente, execute o pipeline completo:
 
@@ -76,24 +76,24 @@ pipeline.executar_tudo()
 
 
 
-## 📊 Principais Funcionalidades
+## Principais Funcionalidades
 
-### 📌 Análise Exploratória:
-- Identificação de outliers 📊
-- Tratamento de valores ausentes ⚠️
-- Correlação entre variáveis 🔍
+### Análise Exploratória:
+- Identificação de outliers 
+- Tratamento de valores ausentes ⚠
+- Correlação entre variáveis 
 
-### 🤖 Modelagem de Aprendizado de Máquina:
+### Modelagem de Aprendizado de Máquina:
 - Regressão Linear e Árvores de Decisão
 - Redes Neurais (Sequential, Keras)
 - Otimização com KerasTuner
 
-### 📈 Visualização Interativa:
+### Visualização Interativa:
 - Gráficos de dispersão e histogramas
 - Tendência temporal da expectativa de vida
 - Matriz de correlação entre variáveis
 
-## 💡 Exemplo de Uso
+## Exemplo de Uso
 
 ### Rodando a Modelagem com Redes Neurais
 
@@ -111,13 +111,13 @@ avaliacao = ModelEvaluator(y_test, predictions, model.history.history)
 avaliacao.executar_avaliacao_completa()
 ```
 
-## 🔗 Referências
+## Referências
 
 - 📄 [WHO Life Expectancy Dataset](https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who)
 - 📘 [Documentação do Pandas](https://pandas.pydata.org/)
 - 📘 [TensorFlow & Keras](https://www.tensorflow.org/)
 
-## 👥 Contribuição
+## Contribuição
 
 Contribuições são bem-vindas! Para contribuir:
 
@@ -125,32 +125,32 @@ Contribuições são bem-vindas! Para contribuir:
 2. Crie uma branch (`git checkout -b feature-nova`)
 3. Commit suas alterações (`git commit -m 'Adicionando nova funcionalidade'`)
 4. Envie para análise (`git push origin feature-nova`)
-5. Abra um Pull Request 🚀
+5. Abra um Pull Request
 
-## 🏆 Reconhecimentos e Direitos Autorais
+## Reconhecimentos e Direitos Autorais
 
-### 📌 Autores:
+### Autores:
 - Davi Oliveira Cortes MAT: 2020034190
 
-### 📩 Contato:
+### Contato:
 - Email: davi.cortes@discente.ufma.br
 - GitHub: https://github.com/Davicortes10
 
-### 📅 Última versão: 28/02/2025
-### 🔢 Versão: 1.0
+### Última versão: 28/02/2025
+### Versão: 1.0
 
-### 📌 Agradecimentos:
+### Agradecimentos:
 Este trabalho foi desenvolvido no curso **Engenharia da Computação** na **Universidade Federal do Maranhão (UFMA)**, sob a orientação do **Professor Doutor Thales Levi Azevedo Valente**. Agradecemos a todos os colegas que contribuíram para a construção deste projeto.
 
-## ⚖️ Licença
+## Licença
 
-### 📌 Sobre este projeto
+### Sobre este projeto
 Este material é resultado de um trabalho acadêmico para a disciplina **Mineração de Dados e Aplicações a Engenharia**, orientado pelo professor **Dr. Thales Levi Azevedo Valente**, semestre letivo **2024.2**, curso **Engenharia da Computação** na **Universidade Federal do Maranhão (UFMA)**.
 
-### 📌 Licença MIT
+### Licença MIT
 Este projeto está licenciado sob a **Licença MIT**.
 
-🔗 [Mais informações sobre a Licença MIT](https://opensource.org/licenses/MIT)
+ [Mais informações sobre a Licença MIT](https://opensource.org/licenses/MIT)
 
-🚀 Desenvolvido por Davi Oliveira Cortes e colaboradores 🚀
+ Desenvolvido por Davi Oliveira Cortes e colaboradores 
 

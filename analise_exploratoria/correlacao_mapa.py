@@ -28,3 +28,16 @@ class MatrizRelacao:
 
         print("\n🔥 Correlações Significativas (>|{:.2f}|):".format(limiar))
         return high_correlations
+    
+    def visualizar_heatmap_correlacoes(self, limiar: float = 0.5) -> None:
+        
+        high_correlations = self.obter_correlacoes_significativas(limiar)
+
+        if high_correlations.empty:
+            print("✅ Nenhuma correlação significativa encontrada para o limiar definido.")
+            return
+
+        plt.figure(figsize=(10, 8))
+        sns.heatmap(high_correlations, annot=True, cmap='coolwarm', fmt=".2f", linewidths=0.5)
+        plt.title(f"Heatmap das Correlações Significativas (> |{limiar}|)")
+        plt.show()

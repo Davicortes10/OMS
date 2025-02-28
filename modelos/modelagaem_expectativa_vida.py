@@ -101,7 +101,7 @@ class LifeExpectancyNN:
             batch_size (int): Tamanho do batch.
             validation_split (float): Percentual dos dados usados para validação.
         """
-        
+
         self.model.fit(self.X_train, self.y_train, epochs=epochs, batch_size=batch_size, validation_split=validation_split)
     
     def evaluate_model(self):
@@ -142,3 +142,34 @@ class LifeExpectancyNN:
         # Exibir tabelas formatadas
         tools.display_dataframe_to_user(name="Métricas do Modelo", dataframe=df_metrics)
         tools.display_dataframe_to_user(name="Matriz de Confusão", dataframe=df_conf_matrix)
+    
+    def executar_pipeline(self, epochs=1000, batch_size=32, validation_split=0.2):
+        """
+        Executa o pipeline completo de modelagem da expectativa de vida.
+
+        Este método inclui as seguintes etapas:
+        1. Compilação do modelo com otimizador e função de perda.
+        2. Treinamento do modelo nos dados de treinamento.
+        3. Avaliação do modelo nos dados de teste.
+        4. Exibição das métricas de desempenho.
+
+        Args:
+            epochs (int, opcional): Número de épocas para o treinamento (padrão: 1000).
+            batch_size (int, opcional): Tamanho do batch para treinamento (padrão: 32).
+            validation_split (float, opcional): Percentual dos dados de treino usados para validação (padrão: 0.2).
+
+        Returns:
+            None: Apenas exibe os resultados formatados.
+
+        Example:
+            >>> model = LifeExpectancyNN(df)
+            >>> model.executar_pipeline(epochs=500, batch_size=64, validation_split=0.3)
+        """
+        print("\n🔄 Compilando o modelo...")
+        self.compile_model()
+
+        print("\n📊 Iniciando o treinamento do modelo...")
+        self.train_model(epochs=epochs, batch_size=batch_size, validation_split=validation_split)
+
+        print("\n✅ Avaliando o modelo...")
+        self.evaluate_model()

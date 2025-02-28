@@ -289,6 +289,7 @@ class LeitorDataset:
         self.estatisticas()
         self.registros_faltantes()
         self.primeiras_linhas()
+        return self.df
 
 
 

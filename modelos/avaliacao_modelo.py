@@ -22,3 +22,13 @@ class ModelEvaluator:
         r2 = r2_score(self.y_test, self.predictions)
         print(f"\n📊 R² Score: {r2:.4f}")
         return r2
+    
+    def comparar_valores_reais_preditos(self) -> None:
+        df = pd.DataFrame({'Actual': self.y_test, 'Predicted': self.predictions})
+        df.plot(kind='hist', alpha=0.7, bins=30, figsize=(8, 5))
+        plt.title("Comparação de Valores Reais vs. Preditos")
+        plt.xlabel("Expectativa de Vida")
+        plt.ylabel("Frequência")
+        plt.legend(["Valores Reais", "Valores Preditos"])
+        plt.grid()
+        plt.show()

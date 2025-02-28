@@ -40,3 +40,12 @@ class LifeExpectancyNN:
         df[self.label_cols] = df[self.label_cols].apply(le.fit_transform)
 
         return df
+    
+    def build_model(self, input_shape: tuple) -> Sequential:
+        
+        model = Sequential([
+            Dense(128, activation='relu', input_shape=input_shape),
+            Dense(64, activation='relu'),
+            Dense(1, activation='linear')
+        ])
+        return model

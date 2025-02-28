@@ -49,3 +49,6 @@ class LifeExpectancyNN:
             Dense(1, activation='linear')
         ])
         return model
+    
+    def compile_model(self, optimizer='adam', loss='Huber', metrics=['mae']):
+        self.model.compile(optimizer=optimizer, loss=loss, metrics=metrics)

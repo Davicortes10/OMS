@@ -32,3 +32,11 @@ class ModelEvaluator:
         plt.legend(["Valores Reais", "Valores Preditos"])
         plt.grid()
         plt.show()
+
+    def visualizar_historico_perda(self) -> None:
+        pd.DataFrame(self.model_history).plot(figsize=(8, 5))
+        plt.title("Histórico de Treinamento - Função de Perda")
+        plt.xlabel("Épocas")
+        plt.ylabel("Perda")
+        plt.grid()
+        plt.show()

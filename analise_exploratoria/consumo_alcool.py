@@ -60,7 +60,7 @@ class ConsumoAlcool:
         fig.update_layout(
             xaxis_title='Alcohol', 
             yaxis_title='Count', 
-            title='Stacked Histogram of Alcohol by Status'
+            title='Histograma empilhado de álcool por status'
         )
 
         # Exibe o gráfico interativo

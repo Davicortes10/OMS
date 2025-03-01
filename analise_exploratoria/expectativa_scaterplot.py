@@ -47,14 +47,14 @@ class VisualizacaoScaterPlot:
         # Criando o gráfico de dispersão
         fig = px.scatter(self.df, 
                          x=' BMI ', 
-                         y='Life expectancy ', 
+                         y='Expectativa de vida', 
                          color='Status', 
-                         title='Life Expectancy vs BMI')
+                         title='Expectativa de vida vs BMI')
 
         # Personalizando o layout
         fig.update_layout(
             xaxis_title='BMI', 
-            yaxis_title='Life Expectancy'
+            yaxis_title='Expectativa de vida'
         )
 
         # Exibe o gráfico interativo

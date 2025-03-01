@@ -55,7 +55,7 @@ class VisualizadorExpectativaVida:
                       x='Year', 
                       y='Life expectancy ', 
                       color='Country', 
-                      title='Trend of Life Expectancy Over the Years')
+                      title='Tendência da expectativa de vida ao longo dos anos')
 
         # Exibe o gráfico interativo
         fig.show()

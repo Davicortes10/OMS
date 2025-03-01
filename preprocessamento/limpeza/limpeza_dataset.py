@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.impute import KNNImputer
 
-class KNNMissingValueImputer:
+class PreenchendoKNN:
     """
     Classe para imputação de valores ausentes usando K-Nearest Neighbors (KNN).
 

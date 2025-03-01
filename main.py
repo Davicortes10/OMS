@@ -1,5 +1,5 @@
 from dataset.leitura_dataset import LeitorDataset
-from modelos.modelagaem_expectativa_vida import LifeExpectancyNN
+from modelos.modelagaem_expectativa_vida import ExpectativaVidaMLP
 from analise_exploratoria.consumo_alcool import ConsumoAlcool
 from analise_exploratoria.correlacao_mapa import MatrizRelacao
 from analise_exploratoria.expectativa_scaterplot import VisualizacaoScaterPlot
@@ -9,7 +9,7 @@ from preprocessamento.analise.dataframe_final import DataFrameFinal
 from preprocessamento.analise.duplicatas import Duplicatas
 from preprocessamento.analise.valores_ausentes import AnaliseValoresAusentes
 from preprocessamento.limpeza.colunas_redundantes import RemovendoColunas
-from preprocessamento.limpeza.limpeza_dataset import KNNMissingValueImputer
+from preprocessamento.limpeza.limpeza_dataset import PreenchendoKNN
 from preprocessamento.outliers.outliers import Outlier
 
 
@@ -32,7 +32,7 @@ class Principal:
         self.df = outli.executar_outliers()
     
     def preencher_valor_ausente(self):
-        valor_ause = KNNMissingValueImputer(self.df)
+        valor_ause = PreenchendoKNN(self.df)
         self.df = valor_ause.executar_limpeza_dados()
     
     def dataframefinal(self):
@@ -64,7 +64,7 @@ class Principal:
         self.df = colunas.executar_remover_colunas()
     
     def rede_neural(self):
-        rede = LifeExpectancyNN(self.df)
+        rede = ExpectativaVidaMLP(self.df)
         rede.executar_pipeline()
 
     def executar_tudo(self):

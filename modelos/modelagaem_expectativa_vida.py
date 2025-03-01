@@ -6,9 +6,9 @@ from tensorflow.keras.models import Sequential
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-from modelos.avaliacao_modelo import ModelEvaluator
+from modelos.avaliacao_modelo import Avaliacao
 
-class LifeExpectancyNN:
+class ExpectativaVidaMLP:
     """
     Classe para modelagem de Expectativa de Vida usando Redes Neurais Artificiais (RNA).
 
@@ -46,7 +46,7 @@ class LifeExpectancyNN:
 
         self.model = self.build_model(input_shape=(self.X_train.shape[1],))
     
-    def preprocess_data(self, df: pd.DataFrame) -> pd.DataFrame:
+    def preprocessamento_data(self, df: pd.DataFrame) -> pd.DataFrame:
         """
         Normaliza os dados numéricos e aplica Label Encoding às variáveis categóricas.
 
@@ -62,7 +62,7 @@ class LifeExpectancyNN:
 
         return df
     
-    def build_model(self, input_shape: tuple) -> Sequential:
+    def modelando(self, input_shape: tuple) -> Sequential:
         """
         Constrói um modelo de Rede Neural `Sequential`.
 
@@ -80,7 +80,7 @@ class LifeExpectancyNN:
         ])
         return model
     
-    def compile_model(self, optimizer='adam', loss='Huber', metrics=['mae']):
+    def compilando(self, optimizer='adam', loss='Huber', metrics=['mae']):
         """
         Compila o modelo com otimizador e função de perda definidos.
 
@@ -92,7 +92,7 @@ class LifeExpectancyNN:
 
         self.model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
 
-    def train_model(self, epochs=1000, batch_size=32, validation_split=0.2):
+    def treinando(self, epochs=1000, batch_size=32, validation_split=0.2):
         """
         Treina o modelo com os dados de treinamento.
 
@@ -104,7 +104,7 @@ class LifeExpectancyNN:
 
         self.model.fit(self.X_train, self.y_train, epochs=epochs, batch_size=batch_size, validation_split=validation_split)
     
-    def evaluate_model(self):
+    def avaliando(self):
         """
         Avalia o desempenho do modelo treinado e exibe métricas de desempenho para regressão.
 
@@ -141,7 +141,7 @@ class LifeExpectancyNN:
         print(df_metrics)
 
         # Criar instância da classe ModelEvaluator para análises visuais
-        avaliacao = ModelEvaluator(self.y_test, y_pred, self.model.history.history)
+        avaliacao =  Avaliacao(self.y_test, y_pred, self.model.history.history)
         
         print("\n📊 **Gerando análises visuais...**")
         avaliacao.executar_avaliacao_completa()
@@ -171,10 +171,10 @@ class LifeExpectancyNN:
             >>> model.executar_pipeline(epochs=500, batch_size=64, validation_split=0.3)
         """
         print("\n🔄 Compilando o modelo...")
-        self.compile_model()
+        self.compilando()
 
         print("\n📊 Iniciando o treinamento do modelo...")
-        self.train_model(epochs=epochs, batch_size=batch_size, validation_split=validation_split)
+        self.treinando(epochs=epochs, batch_size=batch_size, validation_split=validation_split)
 
         print("\n✅ Avaliando o modelo...")
-        self.evaluate_model()
+        self.avaliando()

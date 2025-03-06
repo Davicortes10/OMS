@@ -40,13 +40,17 @@ class ExpectativaVidaMLP:
         self.X = self.pre_processed_csv.drop('Life expectancy ', axis=1)
         self.y = self.pre_processed_csv['Life expectancy ']
 
-        self.X_train, self.X_test, self.y_train, self.y_test = train_test_split(
-            self.X, self.y, test_size=0.2, random_state=123
+        self.X_train, self.X_temp, self.y_train, self.y_temp = train_test_split(
+            self.X, self.y, test_size=0.4, random_state=123
+        )
+
+        self.X_val, self.X_test, self.y_val, self.y_test = train_test_split(
+            self.X_temp, self.y_temp, test_size=0.5, random_state=123
         )
 
         self.normalizar_dados()
 
-        self.model = self.build_model(input_shape=(self.X_train.shape[1],))
+        self.model = self.modelando(input_shape=(self.X_train.shape[1],))
     
     def preprocessamento_data(self, df: pd.DataFrame) -> pd.DataFrame:
         """
@@ -79,8 +83,8 @@ class ExpectativaVidaMLP:
         mm = MinMaxScaler()
 
 
-        self.X_train = mm.fit_transform(self.X_train)  
-
+        self.X_train = mm.fit_transform(self.X_train)
+        self.X_val = mm.transform(self.X_val)
         self.X_test = mm.transform(self.X_test)
     
     def modelando(self, input_shape: tuple) -> Sequential:
@@ -123,7 +127,12 @@ class ExpectativaVidaMLP:
             validation_split (float): Percentual dos dados usados para validação.
         """
 
-        self.model.fit(self.X_train, self.y_train, epochs=epochs, batch_size=batch_size, validation_split=validation_split)
+        self.model.fit(
+            self.X_train, self.y_train,
+            epochs=epochs,
+            batch_size=batch_size,
+            validation_data=(self.X_val, self.y_val) 
+        )
     
     def avaliando(self):
         """

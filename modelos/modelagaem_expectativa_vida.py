@@ -49,19 +49,38 @@ class ExpectativaVidaMLP:
         self.model = self.build_model(input_shape=(self.X_train.shape[1],))
     
     def preprocessamento_data(self, df: pd.DataFrame) -> pd.DataFrame:
+        """
+        Aplica Label Encoding às colunas categóricas para conversão em valores numéricos.
+
+        Args:
+            df (pd.DataFrame): DataFrame contendo variáveis categóricas.
+
+        Returns:
+            pd.DataFrame: DataFrame com colunas categóricas convertidas.
+        """
+
         le = LabelEncoder()
         
-        # Aplicar Label Encoding apenas nas colunas categóricas
         df[self.label_cols] = df[self.label_cols].apply(le.fit_transform)
 
         return df
     
     def normalizar_dados(self):
+        """
+        Aplica normalização Min-Max apenas ao conjunto de treino e usa os mesmos parâmetros no teste.
+
+        Args:
+            None (usa os atributos da classe).
+
+        Returns:
+            None (modifica os atributos X_train e X_test in-place).
+        """
+        
         mm = MinMaxScaler()
 
-        # Ajustar e transformar apenas o treino
+
         self.X_train = mm.fit_transform(self.X_train)  
-        # Aplicar os mesmos parâmetros ao teste
+
         self.X_test = mm.transform(self.X_test)
     
     def modelando(self, input_shape: tuple) -> Sequential:

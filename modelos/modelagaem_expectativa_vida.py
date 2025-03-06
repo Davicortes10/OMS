@@ -3,9 +3,9 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.models import Sequential
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split,KFold
 from sklearn.preprocessing import LabelEncoder, MinMaxScaler
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.metrics import mean_absolute_error, r2_score
 from modelos.avaliacao_modelo import Avaliacao
 
 class ExpectativaVidaMLP:
@@ -22,7 +22,7 @@ class ExpectativaVidaMLP:
         model (Sequential): O modelo de Rede Neural criado.
     """
 
-    def __init__(self, df: pd.DataFrame):
+    def __init__(self, df: pd.DataFrame, k_folds=5):
         """
         Inicializa a classe, realizando a preparação dos dados.
 
@@ -33,6 +33,7 @@ class ExpectativaVidaMLP:
             raise TypeError("❌ O argumento fornecido deve ser um DataFrame do Pandas.")
 
         self.df = df.copy()
+        self.k_folds = k_folds
         self.label_cols = ['Country', 'Status']
         self.scale_cols = [col for col in df.columns if col not in self.label_cols + ['Life expectancy ']]
         
@@ -43,7 +44,6 @@ class ExpectativaVidaMLP:
         self.X_train, self.X_temp, self.y_train, self.y_temp = train_test_split(
             self.X, self.y, test_size=0.4, random_state=123
         )
-
         self.X_val, self.X_test, self.y_val, self.y_test = train_test_split(
             self.X_temp, self.y_temp, test_size=0.5, random_state=123
         )
@@ -105,7 +105,7 @@ class ExpectativaVidaMLP:
         ])
         return model
     
-    def compilando(self, optimizer='adam', loss='Huber', metrics=['mae']):
+    def compilando(self, optimizer='adam', loss='mse', metrics=['mae']):
         """
         Compila o modelo com otimizador e função de perda definidos.
 
@@ -119,20 +119,40 @@ class ExpectativaVidaMLP:
 
     def treinando(self, epochs=1000, batch_size=32):
         """
-        Treina o modelo com os dados de treinamento.
-
-        Args:
-            epochs (int): Número de épocas.
-            batch_size (int): Tamanho do batch.
-            validation_split (float): Percentual dos dados usados para validação.
+        Treina o modelo utilizando validação cruzada K-Fold.
         """
+        kf = KFold(n_splits=self.k_folds, shuffle=True, random_state=123)
+        mae_scores = []
+        r2_scores = []
 
-        self.model.fit(
-            self.X_train, self.y_train,
-            epochs=epochs,
-            batch_size=batch_size,
-            validation_data=(self.X_val, self.y_val) 
-        )
+        for train_index, val_index in kf.split(self.X_train):
+            X_train_fold, X_val_fold = self.X_train[train_index], self.X_train[val_index]
+            y_train_fold, y_val_fold = self.y_train.iloc[train_index], self.y_train.iloc[val_index]
+
+            # Criar um novo modelo para cada iteração do K-Fold
+            self.model = self.modelando(input_shape=(X_train_fold.shape[1],))
+            self.compilando()
+
+            self.model.fit(
+                X_train_fold, y_train_fold,
+                epochs=epochs,
+                batch_size=batch_size,
+                validation_data=(X_val_fold, y_val_fold),
+                verbose=0  # Reduz logs durante o treino
+            )
+
+            # Previsão e avaliação do fold
+            y_pred = self.model.predict(X_val_fold).flatten()
+            mae = mean_absolute_error(y_val_fold, y_pred)
+            r2 = r2_score(y_val_fold, y_pred)
+
+            mae_scores.append(mae)
+            r2_scores.append(r2)
+
+        # Exibir média dos resultados da Validação Cruzada
+        print(f"\n📊 **Resultados da Validação Cruzada K-Fold ({self.k_folds} folds):**")
+        print(f"MAE médio: {np.mean(mae_scores):.4f}")
+        print(f"R² médio: {np.mean(r2_scores):.4f}")
     
     def avaliando(self):
         """
@@ -178,7 +198,7 @@ class ExpectativaVidaMLP:
 
         print("\n✅ **Avaliação do modelo finalizada!** 🚀")
     
-    def executar_pipeline(self, epochs=1000, batch_size=32, validation_split=0.2):
+    def executar_pipeline(self, epochs=1000, batch_size=3):
         """
         Executa o pipeline completo de modelagem da expectativa de vida.
 
@@ -204,7 +224,7 @@ class ExpectativaVidaMLP:
         self.compilando()
 
         print("\n📊 Iniciando o treinamento do modelo...")
-        self.treinando(epochs=epochs, batch_size=batch_size, validation_split=validation_split)
+        self.treinando(epochs=epochs, batch_size=batch_size)
 
         print("\n✅ Avaliando o modelo...")
         self.avaliando()

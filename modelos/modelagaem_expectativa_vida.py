@@ -47,17 +47,9 @@ class ExpectativaVidaMLP:
         self.model = self.build_model(input_shape=(self.X_train.shape[1],))
     
     def preprocessamento_data(self, df: pd.DataFrame) -> pd.DataFrame:
-        """
-        Normaliza os dados numéricos e aplica Label Encoding às variáveis categóricas.
-
-        Returns:
-            pd.DataFrame: DataFrame pré-processado.
-        """
-
         le = LabelEncoder()
-        mm = MinMaxScaler()
-
-        df[self.scale_cols] = mm.fit_transform(df[self.scale_cols])
+        
+        # Aplicar Label Encoding apenas nas colunas categóricas
         df[self.label_cols] = df[self.label_cols].apply(le.fit_transform)
 
         return df

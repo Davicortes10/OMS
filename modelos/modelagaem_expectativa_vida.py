@@ -36,7 +36,7 @@ class ExpectativaVidaMLP:
         self.label_cols = ['Country', 'Status']
         self.scale_cols = [col for col in df.columns if col not in self.label_cols + ['Life expectancy ']]
         
-        self.pre_processed_csv = self.preprocess_data(df)
+        self.pre_processed_csv = self.preprocessamento_data(df)
         self.X = self.pre_processed_csv.drop('Life expectancy ', axis=1)
         self.y = self.pre_processed_csv['Life expectancy ']
 
@@ -117,7 +117,7 @@ class ExpectativaVidaMLP:
 
         self.model.compile(optimizer=optimizer, loss=loss, metrics=metrics)
 
-    def treinando(self, epochs=1000, batch_size=32, validation_split=0.2):
+    def treinando(self, epochs=1000, batch_size=32):
         """
         Treina o modelo com os dados de treinamento.
 

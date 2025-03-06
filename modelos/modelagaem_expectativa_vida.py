@@ -44,6 +44,8 @@ class ExpectativaVidaMLP:
             self.X, self.y, test_size=0.2, random_state=123
         )
 
+        self.normalizar_dados()
+
         self.model = self.build_model(input_shape=(self.X_train.shape[1],))
     
     def preprocessamento_data(self, df: pd.DataFrame) -> pd.DataFrame:
@@ -53,6 +55,14 @@ class ExpectativaVidaMLP:
         df[self.label_cols] = df[self.label_cols].apply(le.fit_transform)
 
         return df
+    
+    def normalizar_dados(self):
+        mm = MinMaxScaler()
+
+        # Ajustar e transformar apenas o treino
+        self.X_train = mm.fit_transform(self.X_train)  
+        # Aplicar os mesmos parâmetros ao teste
+        self.X_test = mm.transform(self.X_test)
     
     def modelando(self, input_shape: tuple) -> Sequential:
         """
